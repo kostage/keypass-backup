@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-  <dict>
-    <key>Label</key>
-    <string>KeypassBackup</string>
-    <key>WorkingDirectory</key>
-    <string>$HOME/.keypass_backup</string>
-    <key>Program</key>
-    <string>$HOME/.keypass_backup/run.sh</string>
-    <key>RunAtLoad</key>
-    <true/>
-    <key>TimeOut</key>
-    <integer>60</integer>
-    <key>StartCalendarInterval</key>
-    <dict>
-        <key>Day</key>
-        <integer>1</integer>
-    </dict>
-  <key>StandardErrorPath</key>
-  <string>/tmp/keypass_backup.job.err</string>
-  <key>StandardOutPath</key>
-  <string>/tmp/keypass_backup.job.out</string> 
-  </dict>
+   <dict>
+      <key>Label</key>
+      <string>KeypassBackup</string>
+      <key>WorkingDirectory</key>
+      <string>$HOME/.keypass_backup</string>
+      <key>Program</key>
+      <string>$HOME/.keypass_backup/run.sh</string>
+      <key>RunAtLoad</key>
+      <true />
+      <key>TimeOut</key>
+      <integer>60</integer>
+      <key>StartCalendarInterval</key>
+      <dict>
+         <key>Hour</key>
+         <integer>0</integer>
+         <key>Minute</key>
+         <integer>0</integer>
+      </dict>
+      <key>StandardErrorPath</key>
+      <string>/tmp/keypass_backup.job.err</string>
+      <key>StandardOutPath</key>
+      <string>/tmp/keypass_backup.job.out</string>
+   </dict>
 </plist>
