@@ -23,6 +23,8 @@ class TelegramAPI:
             ),
             timeout=10,
         ).json()
+        if resp is None:
+            return False, "no response"
         if resp['ok']:
             return True, "OK"
         else:
@@ -43,7 +45,7 @@ class TelegramNotifier:
         try:
             self.__try_notify(message)
         except:
-            self.__logger.exception("Telegram notify exception")
+            self.__logger.exception("telegram notify exception")
 
     def __try_notify(self, message):
         next_queued = 0

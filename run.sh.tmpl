@@ -1,3 +1,16 @@
 #!/bin/zsh
 
-$PYENV_PYTHON $HOME/.keypass_backup/app.py
+TIMEOUT=60
+NUM_RETRIES=2
+
+res=0
+
+for i in {1..$NUM_RETRIES} ; do
+    $TIMEOUT_CMD $TIMEOUT $PYENV_PYTHON $HOME/.keypass_backup/app.py
+    res=$?
+    [ "$res" -eq 0 ] && echo "process finished" && break
+    [ "$res" -eq 124 ] && echo "timeout: iteration $i took longer than $TIMEOUT seconds" && continue
+    [ ! "$res" -eq 0 ] && echo "process failed with $res code" && continue
+done
+
+exit $res

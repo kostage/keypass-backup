@@ -1,39 +1,41 @@
 # !/bin/zsh
 
-workdir="$HOME/.keypass_backup"
+WORKDIR="$HOME/.keypass_backup"
 
-# install pyenv
+# install staff
 brew install pyenv-virtualenv
+brew install coreutils
 
 # create venv
 pyenv virtualenv 3.10.4 keypass-backup
 pyenv shell keypass-backup
 pip install -r requirements.txt
+export PYENV_PYTHON=`which python`
 
 # test
 pytest || exit
 
-# create workdir
-rm -rf "${workdir}"
-mkdir -p "${workdir}"
+# create WORKDIR
+rm -rf "${WORKDIR}"
+mkdir -p "${WORKDIR}"
 
-# copy files
-files="client_secrets.json config.yaml credentials.json settings.yaml"
-for file in $files ; do
+# copy FILES
+FILES="client_secrets.json config.yaml credentials.json settings.yaml"
+for file in $FILES ; do
     if [ ! -f "${file}" ]; then
         cp "${file}.tmpl" "${file}"
     fi
-    cp "${file}" "${workdir}/"
+    cp "${file}" "${WORKDIR}/"
 done
 for src in `ls ./src/*.py` ; do
-    cp "${src}" "${workdir}/"
+    cp "${src}" "${WORKDIR}/"
 done
 
-export PYENV_PYTHON=`pyenv which python`
-envsubst < run.sh.tmpl > run.sh
+export TIMEOUT_CMD=`which timeout`
+envsubst '$PYENV_PYTHON,$TIMEOUT_CMD' < run.sh.tmpl > run.sh
 
-cp ./run.sh ${workdir}/
-chmod +x ${workdir}/run.sh
+cp ./run.sh ${WORKDIR}/
+chmod +x ${WORKDIR}/run.sh
 
 # setup daily launchd job
 launchctl unload $HOME/Library/LaunchAgents/keypass.backup.daily.plist
